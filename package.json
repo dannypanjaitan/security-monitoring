@@ -1,0 +1,9 @@
+{
+    "name": "security-monitoring",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Real-time database security monitoring system",
+    "scripts": {
+        "test": "echo \"No tests configured yet\""
+    }
+}
