@@ -99,10 +99,18 @@ module.exports = async (req, res) => {
             event: payload.event || null
         });
 
+        const record = payload.record || payload;
+
         return res.status(200).json({
             success: true,
             message: "Webhook authenticated successfully",
-            received: true
+            received: true,
+            record: record ? {
+                id: record.id || null,
+                threat_type: record.threat_type || null,
+                severity: record.severity || null,
+                source_ip: record.source_ip || null
+            } : null
         });
 
     } catch (error) {

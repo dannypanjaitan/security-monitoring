@@ -6,13 +6,14 @@ on:
       - main
 
 jobs:
-  deploy:
+  test-and-deploy:
     runs-on: ubuntu-latest
 
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+      WEBHOOK_HMAC_SECRET: ${{ secrets.WEBHOOK_HMAC_SECRET }}
 
     steps:
       - name: Checkout repository
@@ -22,6 +23,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run HMAC-SHA256 Webhook Authentication Tests
+        run: node test_hmac_webhook.js
+
+      - name: Run Asynchronous AI & NVIDIA NIM Concurrency Tests
+        run: python test_async_ai.py
 
       - name: Install Vercel CLI
         run: npm install -g vercel

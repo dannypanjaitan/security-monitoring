@@ -4,6 +4,8 @@
     "private": true,
     "description": "Real-time database security monitoring system",
     "scripts": {
-        "test": "echo \"No tests configured yet\""
+        "test": "node test_hmac_webhook.js",
+        "test:webhook": "node test_hmac_webhook.js",
+        "test:ai": "python test_async_ai.py"
     }
 }
